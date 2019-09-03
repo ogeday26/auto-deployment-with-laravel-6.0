@@ -10,6 +10,8 @@ exports.up = function(knex) {
 
     table.string('firstname').notNull();
     table.string('lastname').notNull();
+    table.string('email').notNull();
+    table.string('password', 512).notNull();
   });
 };
 
