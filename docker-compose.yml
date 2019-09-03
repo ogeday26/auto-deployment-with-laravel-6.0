@@ -1,0 +1,121 @@
+version: '3'
+services:
+  redis:
+    image: 'redis:alpine'
+    container_name: auto_deployment_dev_redis
+  nginx:
+    build:
+      context: ./nginx/development
+      dockerfile: Dockerfile
+    container_name: auto_deployment_dev_nginx
+    ports:
+      - 80:80
+    depends_on:
+      - nginx-frontend
+      - nginx-management
+      - server
+      - storage
+  nginx-frontend:
+    build:
+      context: ./frontend/nginx
+      dockerfile: Dockerfile
+    container_name: auto_deployment_dev_nginx_frontend
+    restart: always
+    volumes:
+      - ./frontend/src:/var/www
+    depends_on:
+      - frontend
+  nginx-management:
+    build:
+      context: ./management/nginx
+      dockerfile: Dockerfile
+    container_name: auto_deployment_dev_nginx_management
+    restart: always
+    volumes:
+      - ./management/src:/var/www
+    depends_on:
+      - management
+  storage:
+    image: minio/minio
+    container_name: auto_deployment_dev_storage
+    volumes:
+      - ./storage/:/data
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: minio123
+      MINIO_DOMAIN: storage.local
+    command: server /data
+  database:
+    image: centos/postgresql-10-centos7
+    container_name: auto_deployment_dev_database
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRESQL_USER=ogeday26
+      - POSTGRESQL_PASSWORD=ogeday26
+      - POSTGRESQL_DATABASE=ogeday26
+      - POSTGRESQL_ADMIN_PASSWORD=ogeday26
+    volumes:
+      - data:/var/lib/postgresql/data
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    container_name: auto_deployment_dev_server
+    volumes:
+      - ./server:/usr/app
+      - /usr/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - POSTGRES_USER=ogeday26
+      - POSTGRES_HOST=database
+      - POSTGRES_DATABASE=ogeday26
+      - POSTGRES_PASSWORD=ogeday26
+      - POSTGRES_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=ogeday26-secretkey
+    depends_on:
+      - redis
+      - database
+      - storage
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: auto_deployment_dev_frontend
+    volumes:
+      - ./frontend/src:/var/www
+  management:
+    build:
+      context: ./management
+      dockerfile: Dockerfile.dev
+    container_name: auto_deployment_dev_management
+    volumes:
+      - ./management/src:/var/www
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: auto_deployment_dev_prometheus
+    ports:
+    - 9090:9090
+    command:
+    - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+    - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+    - cadvisor
+  cadvisor:
+    image: google/cadvisor:latest
+    container_name: auto_deployment_dev_cadvisor
+    ports:
+    - 8080:8080
+    volumes:
+    - c:\:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
+    depends_on:
+    - redis
+volumes:
+  data:
