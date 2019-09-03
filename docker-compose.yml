@@ -57,7 +57,7 @@ services:
       - POSTGRESQL_DATABASE=ogeday26
       - POSTGRESQL_ADMIN_PASSWORD=ogeday26
     volumes:
-      - data:/var/lib/postgresql/data
+      - auto_deploy_data:/var/lib/postgresql/data
   server:
     build:
       context: ./server
@@ -118,4 +118,4 @@ services:
     depends_on:
     - redis
 volumes:
-  data:
+  auto_deploy_data:
