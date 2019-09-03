@@ -5,7 +5,12 @@ exports.seed = function(knex) {
     .then(function() {
       // Inserts seed entries
       return knex('users').insert([
-        { firsname: 'Halil Safa', lastname: 'SAĞLIK', email: 'safa@rubiklabs.com', password: '123' }
+        {
+          firstname: 'Halil Safa',
+          lastname: 'SAĞLIK',
+          email: 'safa@rubiklabs.com',
+          password: '123'
+        }
       ]);
     });
 };
