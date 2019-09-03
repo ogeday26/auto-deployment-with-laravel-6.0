@@ -4,7 +4,10 @@ exports.up = function(knex) {
       .increments('id')
       .unsigned()
       .primary();
-    table.dateTime('createdAt').notNull();
+    table
+      .dateTime('createdAt')
+      .notNull()
+      .defaultTo(knex.fn.now());
     table.dateTime('updatedAt').nullable();
     table.dateTime('deletedAt').nullable();
 
