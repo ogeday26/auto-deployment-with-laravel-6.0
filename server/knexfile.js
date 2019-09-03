@@ -5,9 +5,9 @@ module.exports = {
     client: 'pg',
     connection: {
       host: '127.0.0.1',
-      user: 'ogeday26',
+      user: 'postgres',
       password: 'ogeday26',
-      database: 'ogeday26'
+      database: 'postgres'
     },
     migrations: {
       tableName: 'knex_migrations',
