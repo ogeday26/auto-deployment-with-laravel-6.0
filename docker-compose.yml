@@ -52,9 +52,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRESQL_USER=ogeday26
+      - POSTGRESQL_USER=postgres
       - POSTGRESQL_PASSWORD=ogeday26
-      - POSTGRESQL_DATABASE=ogeday26
+      - POSTGRESQL_DATABASE=postgres
       - POSTGRESQL_ADMIN_PASSWORD=ogeday26
     volumes:
       - auto_deploy_data:/var/lib/postgresql/data
@@ -68,9 +68,10 @@ services:
       - /usr/app/node_modules
     environment:
       - NODE_ENV=development
-      - POSTGRES_USER=ogeday26
+      - POSTGRES_USER=postgres
+      - POSTGRES_CLIENT=`pg`
       - POSTGRES_HOST=database
-      - POSTGRES_DATABASE=ogeday26
+      - POSTGRES_DATABASE=postgres
       - POSTGRES_PASSWORD=ogeday26
       - POSTGRES_PORT=5432
       - REDIS_HOST=redis
