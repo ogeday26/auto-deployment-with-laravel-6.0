@@ -2,7 +2,7 @@ const { Model } = require('objection');
 
 class User extends Model {
   static get tableName() {
-    return 'Users';
+    return 'users';
   }
 
   static get idColumn() {
@@ -12,11 +12,11 @@ class User extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['firstName', 'lastName', 'email', 'password', 'createdAt'],
+      required: ['firstname', 'lastname', 'email', 'password', 'createdAt'],
       propperties: {
         id: { type: 'integer' },
-        firstName: { type: 'string', minLength: 1, maxLength: 255 },
-        lastName: { type: 'string', minLength: 1, maxLength: 255 },
+        firstname: { type: 'string', minLength: 1, maxLength: 255 },
+        lastname: { type: 'string', minLength: 1, maxLength: 255 },
         email: { type: 'string', minLength: 1, maxLength: 255 },
         password: { type: 'string', minLength: 1, maxLength: 511 },
         createdAt: { type: 'dateTime' },
@@ -27,7 +27,7 @@ class User extends Model {
   }
 
   fullName() {
-    return this.firstName + ' ' + this.lastName;
+    return this.firstname + ' ' + this.lastname;
   }
 }
 
