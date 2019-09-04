@@ -17,7 +17,8 @@
     "@utils": "src/utils",
     "@config": "config",
     "@controllers": "src/controllers",
-    "@middlewares": "src/middlewares"
+    "@middlewares": "src/middlewares",
+    "@models": "src/models"
   },
   "license": "ISC",
   "dependencies": {
