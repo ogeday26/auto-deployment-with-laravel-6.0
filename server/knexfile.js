@@ -2,10 +2,10 @@ module.exports = {
   // development: {
   client: 'pg',
   connection: {
-    host: process.env.POSTGRES_HOST,
-    user: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
-    database: process.env.POSTGRES_DATABASE
+    host: process.env.POSTGRES_HOST || 'localhost',
+    user: process.env.POSTGRES_USER || 'postgres',
+    password: process.env.POSTGRES_PASSWORD || 'ogeday26',
+    database: process.env.POSTGRES_DATABASE || 'postgres'
   },
   migrations: {
     tableName: 'knex_migrations',
