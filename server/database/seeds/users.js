@@ -9,7 +9,7 @@ exports.seed = function(knex) {
           firstname: 'Halil Safa',
           lastname: 'SAĞLIK',
           email: 'safa@rubiklabs.com',
-          password: '123'
+          password: '$2a$10$awJrjOTxTiRrsv.Nn9Vq.OO6z3aaWgHMhlAunAYQduSfvo8FqD2eq'
         }
       ]);
     });
